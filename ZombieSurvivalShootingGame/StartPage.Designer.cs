@@ -1,7 +1,7 @@
 ﻿
 namespace ZombieSurvivalShootingGame
 {
-    partial class Form2
+    partial class StartPage
     {
         /// <summary>
         /// Required designer variable.
@@ -44,7 +44,7 @@ namespace ZombieSurvivalShootingGame
             this.Start.UseVisualStyleBackColor = false;
             this.Start.Click += new System.EventHandler(this.Start_Click);
             // 
-            // Form2
+            // StartPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -53,8 +53,8 @@ namespace ZombieSurvivalShootingGame
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.Start);
             this.DoubleBuffered = true;
-            this.Name = "Form2";
-            this.Text = "Form2";
+            this.Name = "StartPage";
+            this.Text = "Start page";
             this.ResumeLayout(false);
 
         }

@@ -11,16 +11,16 @@ using zombieShooter;
 
 namespace ZombieSurvivalShootingGame
 {
-    public partial class Form2 : Form
+    public partial class StartPage : Form
     {
-        public Form2()
+        public StartPage()
         {
             InitializeComponent();
         }
 
         private void Start_Click(object sender, EventArgs e)
         {
-            var m = new Form1();
+            var m = new Game();
             m.Show();
         }
     }

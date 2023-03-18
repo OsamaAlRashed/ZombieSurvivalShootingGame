@@ -1,28 +1,23 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using ZombieSurvivalShootingGame.Classes.StrategyPattern;
+using ZombieSurvivalShootingGame.Constants;
 using ZombieSurvivalShootingGame.Properties;
+using ZombieSurvivalShootingGame.Settings;
 
 namespace zombieShooter
 {
 
-    public partial class Form1 : Form
+    public partial class Game : Form
     {
-        bool goUp; // this boolean will be used for the player to go up the screen
-        bool goDown; // this boolean will be used for the player to go down the screen
-        bool goLeft; // this boolean will be used for the player to go left to the screen
-        bool goRight; // this boolean will be used for the player to right to the screen
-        string facing = "up"; // this string is called facing and it will be used to guide the bullets
+        private readonly GameSettings gameSettings = new GameSettings();
+        private string facing = Directions.Up;
+        BitArray facingState = new BitArray(4);
+
         double playerHealth = 100; // this double vaiable is called player health
-        int speed = 10; // this interget is for the speed of the player
-        int ammo = 10; // this integer will hold the number of ammo the player has start of the game
-        int zombieSpeed = 3; // this integer will hold the speed which the zombies move in the game
         int score = 0; // this integer will hold the score the player achieved through the game
         bool gameOver = false; // this boolean is false in the beginning and it will be used when the game is finished
         Random rnd = new Random(); // this is an instance of the random class we will use this to create a random number for this game
@@ -36,7 +31,7 @@ namespace zombieShooter
 
         int preScore = 0;
         
-        public Form1()
+        public Game()
         {
             InitializeComponent();
             RestartGame();
@@ -49,8 +44,8 @@ namespace zombieShooter
             // if the left key is pressed then do the following
             if (e.KeyCode == Keys.Left)
             {
-                goLeft = true; // change go left to true
-                facing = "left"; //change facing to left
+                facingState.GoLeft();
+                facing = Directions.Left; //change facing to left
                 if(gunType == GunType.HandGun)
                 {
                     player.Image = Resources.survivor_idle_handgun_Left;
@@ -66,8 +61,8 @@ namespace zombieShooter
             // if the right key is pressed then do the following
             if (e.KeyCode == Keys.Right)
             {
-                goRight = true; // change go right to true
-                facing = "right"; // change facing to right
+                facingState.GoRight();
+                facing = Directions.Right; // change facing to right
                 if (gunType == GunType.HandGun)
                 {
                     player.Image = Resources.survivor_idle_handgun_Right;
@@ -83,7 +78,7 @@ namespace zombieShooter
             // if the up key is pressed then do the following
             if (e.KeyCode == Keys.Up)
             {
-                facing = "up"; // change facing to up
+                facing = Directions.Up; // change facing to up
                 goUp = true; // change go up to true
                 if (gunType == GunType.HandGun)
                 {
@@ -101,7 +96,7 @@ namespace zombieShooter
             // if the down key is pressed then do the following
             if (e.KeyCode == Keys.Down)
             {
-                facing = "down"; // change facing to down
+                facing = Directions.Down; // change facing to down
                 goDown = true; // change go down to true
                 if (gunType == GunType.HandGun)
                 {
@@ -145,13 +140,13 @@ namespace zombieShooter
             }
 
             //below is the key up selection for the space key
-            if (e.KeyCode == Keys.Space && ammo > 0) // in this if statement we are checking if the space bar is up and ammo is more than 0
+            if (e.KeyCode == Keys.Space && gameSettings.Ammo > 0) // in this if statement we are checking if the space bar is up and ammo is more than 0
             {
-                ammo--; // reduce ammo by 1 from the total number
+                gameSettings.Ammo--; // reduce ammo by 1 from the total number
                 Shoot(facing); // invoke the shoot function with the facing string inside it
                                //facing will transfer up, down, left or right to the function and that will shoot the bullet that way. 
 
-                if (ammo < 1) // if ammo is less than 1
+                if (gameSettings.Ammo < 1) // if ammo is less than 1
                 {
                     DropAmmo(); // invoke the drop ammo function
                 }
@@ -187,7 +182,7 @@ namespace zombieShooter
                 flagGun = false;
             }
 
-            label1.Text = "   Ammo:  " + ammo; // show the ammo amount on label 1
+            label1.Text = "   Ammo:  " + gameSettings.Ammo; // show the ammo amount on label 1
             label2.Text = "Kills: " + score; // show the total kills on the score
 
             // if the player health is less than 20
@@ -198,25 +193,25 @@ namespace zombieShooter
 
             if (goLeft && player.Left > 0)
             {
-                player.Left -= speed;
+                player.Left -= gameSettings.Speed;
                 // if moving left is true AND pacman is 1 pixel more from the left 
                 // then move the player to the LEFT
             }
             if (goRight && player.Left + player.Width < 930)
             {
-                player.Left += speed;
+                player.Left += gameSettings.Speed;
                 // if moving RIGHT is true AND player left + player width is less than 930 pixels
                 // then move the player to the RIGHT
             }
             if (goUp && player.Top > 60)
             {
-                player.Top -= speed;
+                player.Top -= gameSettings.Speed;
                 // if moving TOP is true AND player is 60 pixel more from the top 
                 // then move the player to the UP
             }
             if (goDown && player.Top + player.Height < 700)
             {
-                player.Top += speed;
+                player.Top += gameSettings.Speed;
                 // if moving DOWN is true AND player top + player height is less than 700 pixels
                 // then move the player to the DOWN
             }
@@ -238,7 +233,7 @@ namespace zombieShooter
                         this.Controls.Remove(((PictureBox)x)); // remove the ammo picture box
 
                         ((PictureBox)x).Dispose(); // dispose the picture box completely from the program
-                        ammo += 5; // add 5 ammo to the integer
+                        gameSettings.Ammo += 5; // add 5 ammo to the integer
                     }
                 }
 
@@ -298,23 +293,23 @@ namespace zombieShooter
 
                     if (((PictureBox)x).Left > player.Left)
                     {
-                        ((PictureBox)x).Left -= zombieSpeed; // move zombie towards the left of the player
+                        ((PictureBox)x).Left -= gameSettings.ZombieSpeed; // move zombie towards the left of the player
                         ((PictureBox)x).Image = Resources.skeleton_idle_Left; // change the zombie image to the left
                     }
 
                     if (((PictureBox)x).Top > player.Top)
                     {
-                        ((PictureBox)x).Top -= zombieSpeed; // move zombie upwards towards the players top
+                        ((PictureBox)x).Top -= gameSettings.ZombieSpeed; // move zombie upwards towards the players top
                         ((PictureBox)x).Image = Resources.skeleton_idle_Top; // change the zombie picture to the top pointing image
                     }
                     if (((PictureBox)x).Left < player.Left)
                     {
-                        ((PictureBox)x).Left += zombieSpeed; // move zombie towards the right of the player
+                        ((PictureBox)x).Left += gameSettings.ZombieSpeed; // move zombie towards the right of the player
                         ((PictureBox)x).Image = Resources.skeleton_idle_Right; // change the image to the right image
                     }
                     if (((PictureBox)x).Top < player.Top)
                     {
-                        ((PictureBox)x).Top += zombieSpeed; // move the zombie towards the bottom of the player
+                        ((PictureBox)x).Top += gameSettings.ZombieSpeed; // move the zombie towards the bottom of the player
                         ((PictureBox)x).Image = Resources.skeleton_idle_Down;// change the image to the down zombie
                     }
                 }
@@ -436,7 +431,7 @@ namespace zombieShooter
 
             playerHealth = 100;
             score = 0;
-            ammo = 10;
+            gameSettings.Ammo = 10;
 
             GameTimer.Start();
         }

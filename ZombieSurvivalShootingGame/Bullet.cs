@@ -1,20 +1,13 @@
-﻿
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using System;
 using ZombieSurvivalShootingGame.Classes.StrategyPattern;
+using ZombieSurvivalShootingGame.Constants;
 
 namespace zombieShooter
 {
-    class Bullet
+    public class Bullet
     {
-
-        // start the variable
-
         public string direction; // creating a public string called direction
         public int speed = 20; // creating a integer called speed and assigning a value of 20
         PictureBox BulletPic = new PictureBox(); // create a picture box 
@@ -72,50 +65,50 @@ namespace zombieShooter
         {
 
             // if direction equals to left
-            if (direction == "left")
+            if (direction == Directions.Left)
             {
                 BulletPic.Left -= speed; // move bullet towards the left of the screen
             }
             // if direction equals right
-            if (direction == "right")
+            if (direction == Directions.Right)
             {
                 BulletPic.Left += speed; // move bullet towards the right of the screen
             }
             // if direction is up
-            if (direction == "up")
+            if (direction == Directions.Up)
             {
                 BulletPic.Top -= speed; // move the bullet towards top of the screen
             }
             // if direction is down
-            if (direction == "down")
+            if (direction == Directions.Down)
             {
                 BulletPic.Top += speed; // move the bullet bottom of the screen
             }
 
             if(gun == GunType.ShotGun)
             {
-                if (direction == "left")
+                if (direction == Directions.Left)
                 {
                     BulletPic2.Left -= (int)(speed * (80.00 / 100)); 
                     BulletPic2.Top -= (int)(speed * (20.00 / 100));
                     BulletPic3.Left -= (int)(speed * (80.00 / 100));
                     BulletPic3.Top += (int)(speed * (20.00 / 100));
                 }
-                if (direction == "right")
+                if (direction == Directions.Right)
                 {
                     BulletPic2.Left += (int)(speed * (80.00 / 100));
                     BulletPic2.Top -= (int)(speed * (20.00 / 100));
                     BulletPic3.Left += (int)(speed * (80.00 / 100));
                     BulletPic3.Top += (int)(speed * (20.00 / 100));
                 }
-                if (direction == "up")
+                if (direction == Directions.Up)
                 {
                     BulletPic2.Top -= (int)(speed * (80.00 / 100));
                     BulletPic2.Left -= (int)(speed * (20.00 / 100));
                     BulletPic3.Top -= (int)(speed * (80.00 / 100));
                     BulletPic3.Left += (int)(speed * (20.00 / 100));
                 }
-                if (direction == "down")
+                if (direction == Directions.Down)
                 {
                     BulletPic2.Top += (int)(speed * (80.00 / 100));
                     BulletPic2.Left -= (int)(speed * (20.00 / 100));
