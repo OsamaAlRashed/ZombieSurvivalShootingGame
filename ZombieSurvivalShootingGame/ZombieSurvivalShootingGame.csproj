@@ -46,8 +46,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bullet.cs" />
     <Compile Include="Constants\Directions.cs" />
+    <Compile Include="Constants\ElementTags.cs" />
+    <Compile Include="Constants\FacingMasks.cs" />
+    <Compile Include="Constants\GameConstants.cs" />
+    <Compile Include="Elements\Ammo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Elements\BaseElements.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Elements\Bullet.cs" />
+    <Compile Include="Elements\Gun.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Elements\Health.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Elements\Player.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Elements\Zombie.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Enums\GunType.cs" />
     <Compile Include="Game.cs">
       <SubType>Form</SubType>

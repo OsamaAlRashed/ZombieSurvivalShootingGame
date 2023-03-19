@@ -1,5 +1,6 @@
 ﻿
 using System.Drawing;
+using ZombieSurvivalShootingGame.Elements;
 using ZombieSurvivalShootingGame.Properties;
 
 namespace zombieShooter
@@ -38,7 +39,7 @@ namespace zombieShooter
             this.label3 = new System.Windows.Forms.Label();
             this.healthBar = new System.Windows.Forms.ProgressBar();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
-            this.player = new System.Windows.Forms.PictureBox();
+            this.player = new Player();
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,7 +91,7 @@ namespace zombieShooter
             // 
             this.GameTimer.Enabled = true;
             this.GameTimer.Interval = 20;
-            this.GameTimer.Tick += new System.EventHandler(this.gameEngine);
+            this.GameTimer.Tick += new System.EventHandler(this.GameEngine);
             // 
             // player
             // 
@@ -130,7 +131,7 @@ namespace zombieShooter
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ProgressBar healthBar;
-        private System.Windows.Forms.PictureBox player;
+        private Player player;
         private System.Windows.Forms.Timer GameTimer;
     }
 }
