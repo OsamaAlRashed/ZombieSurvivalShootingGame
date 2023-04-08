@@ -1,39 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using ZombieSurvivalShootingGame.Classes.StrategyPattern;
 using ZombieSurvivalShootingGame.Constants;
 
 namespace ZombieSurvivalShootingGame.Elements
 {
-    public class BulletBuilder
-    {
-
-    }
-
     public class Bullet : BaseElements
     {
         private readonly int speed = 20;
         private string direction;
-        private int bulletLeft;
-        private int bulletTop;
         private int index = 0;
         Timer timer = new Timer();
 
-        public void MakeBullet(Form form, GunType gunType, int left, int top, string direction)
+        public Bullet(Random random, int index, int left, int top, string direction) : base(random)
         {
             this.direction = direction;
-            bulletLeft = left;
-            bulletTop = top;
             Tag = ElementTags.Bullet;
             Size = new Size(5, 5);
             BackColor = Color.White;
             Left = left;
             Top = top;
-
-            form.Controls.Add(this);
-
+            this.index = index;
             timer.Interval = speed;
             timer.Tick += new EventHandler(Tm_Tick);
             timer.Start();
@@ -133,11 +120,11 @@ namespace ZombieSurvivalShootingGame.Elements
                 || Top > GameConstants.BoardDown)
             {
                 Dispose();
-            }
 
-            timer.Stop();
-            timer.Dispose();
-            timer = null;
+                timer.Stop();
+                timer.Dispose();
+                timer = null;
+            }
         }
     }
 }

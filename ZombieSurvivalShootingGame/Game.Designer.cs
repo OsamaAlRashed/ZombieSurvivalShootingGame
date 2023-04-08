@@ -34,38 +34,38 @@ namespace zombieShooter
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.Ammo = new System.Windows.Forms.Label();
+            this.Kills = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.healthBar = new System.Windows.Forms.ProgressBar();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
-            this.player = new Player();
+            this.player = new ZombieSurvivalShootingGame.Elements.Player();
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // Ammo
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(22, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Ammo: 0";
+            this.Ammo.AutoSize = true;
+            this.Ammo.BackColor = System.Drawing.Color.Transparent;
+            this.Ammo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Ammo.ForeColor = System.Drawing.Color.Transparent;
+            this.Ammo.Location = new System.Drawing.Point(22, 18);
+            this.Ammo.Name = "Ammo";
+            this.Ammo.Size = new System.Drawing.Size(83, 20);
+            this.Ammo.TabIndex = 0;
+            this.Ammo.Text = "Ammo: 0";
             // 
-            // label2
+            // Kills
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Transparent;
-            this.label2.Location = new System.Drawing.Point(405, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 20);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Kills: 0";
+            this.Kills.AutoSize = true;
+            this.Kills.BackColor = System.Drawing.Color.Transparent;
+            this.Kills.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Kills.ForeColor = System.Drawing.Color.Transparent;
+            this.Kills.Location = new System.Drawing.Point(405, 18);
+            this.Kills.Name = "Kills";
+            this.Kills.Size = new System.Drawing.Size(68, 20);
+            this.Kills.TabIndex = 1;
+            this.Kills.Text = "Kills: 0";
             // 
             // label3
             // 
@@ -103,7 +103,7 @@ namespace zombieShooter
             this.player.TabIndex = 4;
             this.player.TabStop = false;
             // 
-            // Form1
+            // Game
             // 
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImage = global::ZombieSurvivalShootingGame.Properties.Resources.Background2;
@@ -112,10 +112,10 @@ namespace zombieShooter
             this.Controls.Add(this.player);
             this.Controls.Add(this.healthBar);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.Kills);
+            this.Controls.Add(this.Ammo);
             this.DoubleBuffered = true;
-            this.Name = "Form1";
+            this.Name = "Game";
             this.Text = "Zombie Survival Shooting Game";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);
@@ -127,8 +127,8 @@ namespace zombieShooter
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label Ammo;
+        private System.Windows.Forms.Label Kills;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ProgressBar healthBar;
         private Player player;

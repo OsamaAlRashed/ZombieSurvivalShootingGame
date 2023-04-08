@@ -6,7 +6,7 @@ namespace ZombieSurvivalShootingGame.Elements
 {
     public class BaseElements : PictureBox
     {
-        public BaseElements(Random random = default)
+        public BaseElements(Random random)
         {
             Left = random.Next(0, 900);
             Top = random.Next(0, 800);

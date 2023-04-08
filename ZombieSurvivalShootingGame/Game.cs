@@ -27,7 +27,7 @@ namespace zombieShooter
         private GunType gunType = GunType.HandGun;
 
 
-        bool flagGun = true;
+        bool flagShotGun = true;
         List<PictureBox> zombiesList = new List<PictureBox>();
         int preScore = 0;
         
@@ -116,15 +116,15 @@ namespace zombieShooter
                 player.BringToFront();
             }
 
-            if (score == 5 && flagGun)
+            if (score == 5 && flagShotGun)
             {
                 Controls.Add(new Gun(random));
                 player.BringToFront();
-                flagGun = false;
+                flagShotGun = false;
             }
 
-            label1.Text = GameConstants.AmmoLabel + gameSettings.Ammo;
-            label2.Text = GameConstants.KillsLabel + score;
+            Ammo.Text = GameConstants.AmmoLabel + gameSettings.Ammo;
+            Kills.Text = GameConstants.KillsLabel + score;
 
             if (playerHealth < GameConstants.HealthBarRedWhenScore)
             {
@@ -133,19 +133,19 @@ namespace zombieShooter
 
             if (facingState.GetLeft() && player.Left > GameConstants.BoardLeft)
             {
-                player.Left -= gameSettings.Speed;
+                player.Left -= gameSettings.PlayerSpeed;
             }
             if (facingState.GetRight() && player.Left + player.Width < GameConstants.BoardRight)
             {
-                player.Left += gameSettings.Speed;
+                player.Left += gameSettings.PlayerSpeed;
             }
             if (facingState.GetUp() && player.Top > GameConstants.BoardTop)
             {
-                player.Top -= gameSettings.Speed;
+                player.Top -= gameSettings.PlayerSpeed;
             }
             if (facingState.GetDown() && player.Top + player.Height < GameConstants.BoardDown)
             {
-                player.Top += gameSettings.Speed;
+                player.Top += gameSettings.PlayerSpeed;
             }
 
             foreach (Control control in Controls)
@@ -153,7 +153,7 @@ namespace zombieShooter
                 HandleAmmo(control);
                 HandleHealth(control);
                 HandleGun(control);
-                HandleControl(control);
+                HandleBullet(control);
                 HandleZombie(control);
 
                 foreach (Control bullet in Controls)
@@ -216,11 +216,14 @@ namespace zombieShooter
             }
         }
 
-        private void HandleControl(Control control)
+        private void HandleBullet(Control control)
         {
             if (control is Bullet bullet)
             {
-                if (bullet.Left < 1 || bullet.Left > 930 || bullet.Top < 10 || bullet.Top > 700)
+                if (bullet.Left < GameConstants.BoardLeft 
+                 || bullet.Left > GameConstants.BoardRight
+                 || bullet.Top < GameConstants.BoardTop
+                 || bullet.Top > GameConstants.BoardDown)
                 {
                     Controls.Remove(bullet);
                     bullet.Dispose();
@@ -276,19 +279,19 @@ namespace zombieShooter
         {
             gameSettings.Ammo--;
 
-            //var bulletLeft = player.Left + (player.Width / 2); // place the bullet to left half of the player
-            //var bulletTop = player.Top + (player.Height / 2); // place the bullet on top half of the player
-            //var direction = direct; // assignment the direction to the bullet
+            var bulletLeft = player.Left + (player.Width / 2);
+            var bulletTop = player.Top + (player.Height / 2);
 
-            //var bullet = new Bullet();
-            //bullets.ForEach(bullet => Controls.Add(bullet)); 
+            var bullet1 = new Bullet(random, 0, bulletLeft, bulletTop, direct);
+            Controls.Add(bullet1);
 
-            // this is the function thats makes the new bullets in this game
-            Bullet shoot = new Bullet(); // create a new instance of the bullet class
-            var direction = direct; // assignment the direction to the bullet
-            var bulletLeft = player.Left + (player.Width / 2); // place the bullet to left half of the player
-            var bulletTop = player.Top + (player.Height / 2); // place the bullet on top half of the player
-            shoot.MakeBullet(this, gunType, bulletLeft, bulletTop, direction); // run the function mkBullet from the bullet class. 
+            if(gunType == GunType.ShotGun)
+            {
+                var bullet2 = new Bullet(random, 1, bulletLeft, bulletTop, direct);
+                Controls.Add(bullet2);
+                var bullet3 = new Bullet(random, 2, bulletLeft, bulletTop, direct);
+                Controls.Add(bullet3);
+            }
 
             if (gameSettings.Ammo < 1)
             {

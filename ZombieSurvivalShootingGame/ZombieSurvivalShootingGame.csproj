@@ -56,7 +56,9 @@
     <Compile Include="Elements\BaseElements.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Elements\Bullet.cs" />
+    <Compile Include="Elements\Bullet.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Elements\Gun.cs">
       <SubType>Component</SubType>
     </Compile>

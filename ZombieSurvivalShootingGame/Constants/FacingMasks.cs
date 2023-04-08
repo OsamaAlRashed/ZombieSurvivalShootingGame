@@ -61,11 +61,5 @@ namespace ZombieSurvivalShootingGame.Constants
         public static bool GetLeft(this BitArray currentState) => currentState.Get(3);
         public static void GoLeft(this BitArray currentState) => currentState.Set(3, true);
         public static void StopLeft(this BitArray currentState) => currentState.Set(3, false);
-
-            
-
-        
-
-        
     }
 }
